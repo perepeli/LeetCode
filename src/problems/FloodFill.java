@@ -14,26 +14,24 @@ public class FloodFill {
         }
     }
     public static int[][] floodFill(int[][] image, int sr, int sc, int color) {
-        //image[sr][sc]
         recursive(image, sr, sc, image.length-1, image[0].length-1, image[sr][sc], color);
-
         return image;
     }
 
-    private static void recursive(int[][] image, int sr, int sc, int rows, int colomns, int target, int color) {
-        if(sr < 0 || sr > rows || sc < 0 || sc > colomns) return;
+    private static void recursive(int[][] image, int sr, int sc, int rows, int columns, int target, int color) {
+        if(sr < 0 || sr > rows || sc < 0 || sc > columns) return;
         if(image[sr][sc] == target) {
-            image[sr][sc] = color; // sr->row, sc->col
+            image[sr][sc] = color;
         } else {
             return;
         }
-        //
-        recursive(image, sr-1, sc, rows, colomns, target, color);
-        //
-        recursive(image, sr, sc-1, rows, colomns, target, color);
-        //
-        recursive(image, sr+1, sc, rows, colomns, target, color);
-        //
-        recursive(image, sr, sc+1, rows, colomns, target, color);
+        //up
+        recursive(image, sr-1, sc, rows, columns, target, color);
+        //left
+        recursive(image, sr, sc-1, rows, columns, target, color);
+        //down
+        recursive(image, sr+1, sc, rows, columns, target, color);
+        //right
+        recursive(image, sr, sc+1, rows, columns, target, color);
     }
 }
