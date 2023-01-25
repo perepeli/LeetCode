@@ -1,6 +1,6 @@
 package problems;
 
-public class NumberOfPairs {
+public class Convert1DArrayInto2DArray {
     public int[][] construct2DArray(int[] original, int m, int n) {
         if(original.length != (m * n)) return new int[0][0];
 
