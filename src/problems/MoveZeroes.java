@@ -1,6 +1,6 @@
 package problems;
 
-public class MoveZeoes {
+public class MoveZeroes {
     public void moveZeroes(int[] nums) {
 
         int j = 0;
