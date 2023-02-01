@@ -6,28 +6,19 @@ import java.util.*;
 
 public class BinaryTreeLevelOrderTraversal2 {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        List<List<Integer>> list = new ArrayList<>();
-
-        Map<Integer, List<Integer>> map = new TreeMap<>(Collections.reverseOrder());
-        recursive(root, map, 0);
-        List<List<Integer>> result = new ArrayList<>();
-        for(int key : map.keySet()) result.add(map.get(key));
-        return result;
+        List<List<Integer>> wrapList = new LinkedList<List<Integer>>();
+        levelMaker(wrapList, root, 0);
+        return wrapList;
     }
 
-    private void recursive(TreeNode node, Map<Integer, List<Integer>> map, int level) {
-        if (node == null) return;
-        level++;
-
-        if (!map.containsKey(level)) {
-            List<Integer> list = new ArrayList<>();
-            list.add(node.val);
-            map.put(level, list);
-        } else {
-            map.get(level).add(node.val);
+    public void levelMaker(List<List<Integer>> list, TreeNode root, int level) {
+        if(root == null) return;
+        if(level >= list.size()) {
+            list.add(0, new LinkedList<Integer>());
         }
 
-        recursive(node.left, map, level);
-        recursive(node.right, map, level);
+        list.get(list.size()-level-1).add(root.val);
+        levelMaker(list, root.left, level+1);
+        levelMaker(list, root.right, level+1);
     }
 }
