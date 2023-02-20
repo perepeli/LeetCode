@@ -64,7 +64,6 @@ public class AddTwoNumbers {
             temp = temp.next;
         }
 
-
         return dummy.next;
     }
 }
