@@ -2,39 +2,30 @@ package problems;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class ValidParentheses {
     public boolean isValid(String s) {
-        List<Character> stack = new ArrayList<>();
 
-        //left push
-        //right pop
+        Stack<Character> stack = new Stack<>();
 
-        boolean isValid = true;
-
-        for(char c: s.toCharArray()) {
-            if(c == '}' || c == ']' || c == ')') { // encountered right
-                char right = c;
-                if(stack.isEmpty()) {
-                    isValid = false;
-                    break;
-                } else {
-                    char left = stack.get(stack.size() - 1);
-                    if((left == '{' && right == '}') || (left == '[' && right == ']') || (left == '(' && right == ')')) {
-                        stack.remove(stack.size() - 1);
-                        continue;
-                    } else {
-                        isValid = false;
-                        break;
-                    }
-                }
+        for(char ch : s.toCharArray()) {
+            if(ch == '(' || ch == '[' || ch == '{') {
+                stack.push(ch);
             }
-            if(c == '{' || c == '[' || c == '(') { // encountered left
-                stack.add(c);
+
+            if(ch == ')' || ch == ']' || ch == '}') {
+                if(stack.isEmpty()) return false;
+                char potentialLeft = stack.pop();
+
+                if(potentialLeft == '(' && ch == ')') continue;
+                if(potentialLeft == '[' && ch == ']') continue;
+                if(potentialLeft == '{' && ch == '}') continue;
+                return false;
             }
         }
 
-        if(stack.size() > 0) return false;
-        return isValid;
+        if(stack.size() != 0) return false;
+        return true;
     }
 }
