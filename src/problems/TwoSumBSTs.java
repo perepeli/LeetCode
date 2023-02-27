@@ -8,19 +8,20 @@ public class TwoSumBSTs {
         return dfs(root1, root2, target);
     }
 
-    private boolean dfs(TreeNode node, TreeNode root2, int target) {
-        if(node == null) return false;
-        if(searchBST(root2, target - node.val)) return true;
-        return dfs(node.left, root2, target) || dfs(node.right, root2, target);
+    private boolean dfs(TreeNode root1, TreeNode root2, int target) {
+        if(root1 == null) return false;
+        if(searchBST(root2, target - root1.val)) return true;
+        return dfs(root1.left, root2, target) || dfs(root1.right, root2, target);
     }
 
-    private boolean searchBST(TreeNode node, int target) {
-        if(node == null) return false;
-        if(node.val == target) return true;
-        if(target > node.val) {
-            return searchBST(node.right, target);
+    private boolean searchBST(TreeNode root2, int target) {
+        if(root2 == null) return false;
+        if(root2.val == target) return true;
+        if(root2.val > target) {
+            return searchBST(root2.left, target);
         } else {
-            return searchBST(node.left, target);
+            return searchBST(root2.right, target);
         }
+
     }
 }
