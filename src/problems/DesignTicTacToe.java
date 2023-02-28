@@ -14,6 +14,7 @@ public class DesignTicTacToe {
         if(vertical(board, col, player)) return player;
         if(diagonalDown(board, player)) return player;
         if(diagonalUp(board, player)) return player;
+
         return 0;
     }
 
@@ -40,7 +41,6 @@ public class DesignTicTacToe {
         return true;
     }
     private boolean diagonalUp(int[][] board, int player) {
-
         for(int i = 0; i < board.length; i++) {
             if(board[board.length-1-i][i] == player) continue;
             else return false;
