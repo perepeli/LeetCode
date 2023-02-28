@@ -7,20 +7,32 @@ import java.util.Set;
 
 public class LinkedListCycle2 {
     public ListNode detectCycle(ListNode head) {
-        if(head == null) return null;
+        ListNode slow = head;
+        ListNode fast = head;
 
-        ListNode tempNode = head;
-        Set<ListNode> set = new HashSet<>();
+        boolean hasCycle = false;
 
-        while(tempNode != null) {
-            if(!set.contains(tempNode)) {
-                set.add(tempNode);
-                tempNode = tempNode.next;
-            } else {
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if(slow == fast) {
+                hasCycle = true;
                 break;
             }
         }
-        return tempNode;
 
+        if(hasCycle) {
+            fast = slow;
+            slow = head;
+
+            while(fast != slow) {
+                fast = fast.next;
+                slow = slow.next;
+            }
+            return slow;
+        }
+
+        return null;
     }
 }
