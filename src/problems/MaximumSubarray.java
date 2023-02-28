@@ -2,15 +2,13 @@ package problems;
 
 public class MaximumSubarray {
     public int maxSubArray(int[] nums) {
-        int maxSubarray = Integer.MIN_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-            int currentSubarray = 0;
-            for (int j = i; j < nums.length; j++) {
-                currentSubarray += nums[j];
-                maxSubarray = Math.max(maxSubarray, currentSubarray);
-            }
+        int max = nums[0];
+
+        for(int i = 1; i < nums.length; i++) {
+            nums[i] = Math.max(nums[i], nums[i-1] + nums[i]);
+            max = Math.max(max, nums[i]);
         }
 
-        return maxSubarray;
+        return max;
     }
 }
