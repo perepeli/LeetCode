@@ -10,7 +10,6 @@ public class MergeSortedArray {
         int index = 0;
 
         while(left < m && right < n) {
-            System.out.println(left + " " + right);
 
             if(nums1[left] < nums2[right]) {
                 res[index] = nums1[left];
