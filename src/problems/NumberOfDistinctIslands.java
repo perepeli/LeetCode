@@ -11,7 +11,7 @@ public class NumberOfDistinctIslands {
         for(int i = 0; i < grid.length; i++) {
             for(int j = 0; j < grid[0].length; j++) {
                 StringBuilder sb = new StringBuilder();
-                bfs(grid, i, j, i, j, visited, sb);
+                dfs(grid, i, j, i, j, visited, sb);
                 if(!sb.isEmpty()) set.add(sb.toString());
             }
         }
@@ -19,7 +19,7 @@ public class NumberOfDistinctIslands {
         return set.size();
     }
 
-    private void bfs(int[][] grid, int row, int col, int i, int j, boolean[][] visited, StringBuilder sb) {
+    private void dfs(int[][] grid, int row, int col, int i, int j, boolean[][] visited, StringBuilder sb) {
         if(row < 0 || row >= grid.length || col < 0 || col >= grid[0].length) return;
         if(visited[row][col] || grid[row][col] == 0) return;
         visited[row][col] = true;
@@ -27,10 +27,10 @@ public class NumberOfDistinctIslands {
         sb.append((row - i));
         sb.append((col - j));
 
-        bfs(grid, row + 1, col, i, j, visited, sb);
-        bfs(grid, row - 1, col, i, j, visited, sb);
-        bfs(grid, row, col + 1, i, j, visited, sb);
-        bfs(grid, row, col - 1, i, j, visited, sb);
+        dfs(grid, row + 1, col, i, j, visited, sb);
+        dfs(grid, row - 1, col, i, j, visited, sb);
+        dfs(grid, row, col + 1, i, j, visited, sb);
+        dfs(grid, row, col - 1, i, j, visited, sb);
 
     }
     //[[1,1,0,0,0],
