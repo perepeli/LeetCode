@@ -7,61 +7,73 @@ import java.util.Queue;
 
 public class AddTwoNumbers {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        Queue<Integer> queue = new LinkedList<>();
 
-        boolean carry = false;
+        ListNode dummy = new ListNode();
+        ListNode node = dummy;
+
+        boolean overflow = false;
 
         while(l1 != null && l2 != null) {
-            int newNum = l1.val + l2.val + (carry ? 1 : 0);
-            carry = false;
+            int digit = l1.val + l2.val + (overflow ? 1 : 0);
+            overflow = false;
 
-            if(newNum > 9) {
-                carry = true;
-                queue.offer(newNum - 10);
+            ListNode newNode = new ListNode();
+
+            if(digit > 9) {
+                newNode.val = digit % 10;
+                overflow = true;
             } else {
-                queue.offer(newNum);
+                newNode.val = digit;
             }
+
+            node.next = newNode;
+            node = node.next;
 
             l1 = l1.next;
             l2 = l2.next;
         }
 
         while(l1 != null) {
-            int newNum = l1.val + (carry ? 1 : 0);
-            carry = false;
+            int digit = l1.val + (overflow ? 1 : 0);
+            overflow = false;
 
-            if(newNum > 9) {
-                carry = true;
-                queue.offer(newNum - 10);
+            ListNode newNode = new ListNode();
+
+            if(digit > 9) {
+                newNode.val = digit % 10;
+                overflow = true;
             } else {
-                queue.offer(newNum);
+                newNode.val = digit;
             }
+
+            node.next = newNode;
+            node = node.next;
+
             l1 = l1.next;
         }
 
         while(l2 != null) {
-            int newNum = l2.val + (carry ? 1 : 0);
-            carry = false;
+            int digit = l2.val + (overflow ? 1 : 0);
+            overflow = false;
 
-            if(newNum > 9) {
-                carry = true;
-                queue.offer(newNum - 10);
+            ListNode newNode = new ListNode();
+
+            if(digit > 9) {
+                newNode.val = digit % 10;
+                overflow = true;
             } else {
-                queue.offer(newNum);
+                newNode.val = digit;
             }
+
+            node.next = newNode;
+            node = node.next;
+
             l2 = l2.next;
         }
 
-        if(carry) queue.offer(1);
-
-        ListNode dummy = new ListNode();
-
-        ListNode temp = dummy;
-
-        while(!queue.isEmpty()) {
-            ListNode newNode = new ListNode(queue.poll());
-            temp.next = newNode;
-            temp = temp.next;
+        if(overflow) {
+            ListNode newNode = new ListNode(1);
+            node.next = newNode;
         }
 
         return dummy.next;
