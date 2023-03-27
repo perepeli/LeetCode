@@ -5,41 +5,34 @@ import java.util.List;
 
 public class GenerateParentheses {
     public List<String> generateParenthesis(int n) {
-        List<String> res = new ArrayList<>();
-        recursive(new StringBuilder(), 0, 0, n, res);
-        return res;
+        List<String> result = new ArrayList<>();
+        backtrack(n, 0, 0, new StringBuilder(), result);
+        return result;
     }
 
-    private void recursive(StringBuilder sb, int left, int right, int maxPairs, List<String> res) {
-        if(left == maxPairs && right == maxPairs) { // base case : we're done
-            res.add(sb.toString());
+    private void backtrack(int maxPairs, int left, int right, StringBuilder sb, List<String> result) {
+        if(left == maxPairs && right == maxPairs) { // we're done
+            result.add(sb.toString());
             return;
         }
-        if(left == maxPairs) { // left is full, right is not
-            StringBuilder newSb = new StringBuilder();
-            newSb.append(sb);
-            newSb.append(')');
-            recursive(newSb, left, right + 1, maxPairs, res);
 
-        } else { // have place for both
-            if(left > right) { // right has matching left
-                StringBuilder newLeftSb = new StringBuilder();
-                StringBuilder newRightSb = new StringBuilder();
+        if(left == maxPairs) { // left is full, can add only right
+            sb.append(')');
+            backtrack(maxPairs, left, right + 1, sb, result);
+            sb.deleteCharAt(sb.length() - 1);
+        } else { // left is not full, have place for both
+            if(left > right) { // both
+                sb.append('(');
+                backtrack(maxPairs, left + 1, right, sb, result);
+                sb.deleteCharAt(sb.length() - 1);
 
-                newLeftSb.append(sb);
-                newRightSb.append(sb);
-
-                newLeftSb.append('(');
-                newRightSb.append(')');
-
-                recursive(newLeftSb, left + 1, right, maxPairs, res);
-                recursive(newRightSb, left, right + 1, maxPairs, res);
-
-            } else { // no matching left
-                StringBuilder newSb = new StringBuilder();
-                newSb.append(sb);
-                newSb.append('(');
-                recursive(newSb, left + 1, right, maxPairs, res);
+                sb.append(')');
+                backtrack(maxPairs, left, right + 1, sb, result);
+                sb.deleteCharAt(sb.length() - 1);
+            } else { // only left
+                sb.append('(');
+                backtrack(maxPairs, left + 1, right, sb, result);
+                sb.deleteCharAt(sb.length() - 1);
             }
         }
     }
