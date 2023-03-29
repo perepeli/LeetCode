@@ -2,38 +2,25 @@ package problems;
 
 import problems.listnode.TreeNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class BinaryTreeRightSideView {
     public List<Integer> rightSideView(TreeNode root) {
+        Map<Integer, Integer> map = new LinkedHashMap<>();
 
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        recursive(root, 0, map);
+        recursive(root, 1, map);
 
-        List<Integer> out = new ArrayList<>();
-
-        map.keySet().forEach(e -> {
-            out.add(map.get(e).get(map.get(e).size()-1));
-        });
-
-        return out;
+        return map.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
     }
 
-    private void recursive(TreeNode node, int height, Map<Integer, List<Integer>> map) {
+    private void recursive(TreeNode node, int level, Map<Integer, Integer> map) {
         if(node == null) return;
 
-        if(!map.containsKey(height)) {
-            List<Integer> list = new ArrayList<>();
-            list.add(node.val);
-            map.put(height, list);
-        } else {
-            map.get(height).add(node.val);
-        }
+        map.put(level, node.val);
 
-        recursive(node.left, height + 1, map);
-        recursive(node.right, height + 1, map);
+        recursive(node.left, level + 1, map);
+        recursive(node.right, level + 1, map);
+
     }
 }
