@@ -20,7 +20,11 @@ public class SortAnArray {
 
 
     private int partition(int[] numbers, int left, int right){
+        int middleIndex = (right + left) / 2;
+
+        swap(numbers, middleIndex, right);
         int pivot = right;
+
         int lessIndex = left-1;
         for(int i = left; i<= right; i++){
             if(numbers[i] < numbers[pivot]){
