@@ -20,9 +20,8 @@ public class SortAnArray {
 
 
     private int partition(int[] numbers, int left, int right){
-        int middleIndex = (right + left) / 2;
-
-        swap(numbers, middleIndex, right);
+        int randomIndex = new Random().nextInt(right-left)+left;
+        swap(numbers, randomIndex, right);
         int pivot = right;
 
         int lessIndex = left-1;
