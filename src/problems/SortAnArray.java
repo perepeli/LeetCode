@@ -58,7 +58,7 @@ public class SortAnArray {
         merge(numbers, leftArr, rightArr);
     }
 
-    private static void merge(int[] targetArr, int[] leftArr, int[] rightArr) {
+    private void merge(int[] targetArr, int[] leftArr, int[] rightArr) {
         int leftLen = leftArr.length;
         int rightLen = rightArr.length;
 
