@@ -1,4 +1,4 @@
-package problems.listnode;
+package problems.util;
 /**
  * Definition for singly-linked list.
  * public class ListNode {

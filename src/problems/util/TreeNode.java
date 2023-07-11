@@ -1,4 +1,4 @@
-package problems.listnode;
+package problems.util;
 
 public class TreeNode {
     public int val;
