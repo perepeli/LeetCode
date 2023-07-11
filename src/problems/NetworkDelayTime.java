@@ -1,6 +1,6 @@
 package problems;
 
-import problems.listnode.Pair;
+import problems.util.Pair;
 
 import java.util.*;
 

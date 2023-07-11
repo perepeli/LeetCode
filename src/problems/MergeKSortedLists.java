@@ -1,6 +1,6 @@
 package problems;
 
-import problems.listnode.ListNode;
+import problems.util.ListNode;
 
 import java.util.PriorityQueue;
 

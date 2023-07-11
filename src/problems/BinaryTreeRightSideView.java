@@ -1,9 +1,10 @@
 package problems;
 
-import problems.listnode.TreeNode;
+import problems.util.TreeNode;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 public class BinaryTreeRightSideView {
     public List<Integer> rightSideView(TreeNode root) {

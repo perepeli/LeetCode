@@ -1,6 +1,6 @@
 package problems;
 
-import problems.listnode.ListNode;
+import problems.util.ListNode;
 
 public class MiddleOfTheLinkedList {
     public ListNode middleNode(ListNode head) {

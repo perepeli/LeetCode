@@ -1,7 +1,7 @@
 package problems;
 
 
-import problems.listnode.ListNode;
+import problems.util.ListNode;
 
 public class MergeTwoSortedLists {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {

@@ -1,6 +1,6 @@
 package problems;
 
-import problems.listnode.TreeNode;
+import problems.util.TreeNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;

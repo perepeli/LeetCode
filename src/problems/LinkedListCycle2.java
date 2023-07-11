@@ -1,9 +1,6 @@
 package problems;
 
-import problems.listnode.ListNode;
-
-import java.util.HashSet;
-import java.util.Set;
+import problems.util.ListNode;
 
 public class LinkedListCycle2 {
     public ListNode detectCycle(ListNode head) {

@@ -1,7 +1,7 @@
 package problems;
 
 
-import problems.listnode.TreeNode;
+import problems.util.TreeNode;
 
 import java.util.AbstractMap;
 import java.util.Stack;

@@ -1,6 +1,6 @@
 package problems;
 
-import problems.listnode.ListNode;
+import problems.util.ListNode;
 
 public class LinkedListCycle {
     public boolean hasCycle(ListNode head) {

@@ -1,6 +1,6 @@
 package problems;
 
-import problems.listnode.TreeNode;
+import problems.util.TreeNode;
 
 public class RangeSumOfBST {
     public int rangeSumBST(TreeNode root, int low, int high) {

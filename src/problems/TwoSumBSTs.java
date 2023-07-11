@@ -1,6 +1,6 @@
 package problems;
 
-import problems.listnode.TreeNode;
+import problems.util.TreeNode;
 
 public class TwoSumBSTs {
     public boolean twoSumBSTs(TreeNode root1, TreeNode root2, int target) {

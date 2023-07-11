@@ -1,6 +1,6 @@
 package problems;
 
-import problems.listnode.TreeNode;
+import problems.util.TreeNode;
 
 public class CountGoodNodesInBinaryTree {
     public int goodNodes(TreeNode root) {

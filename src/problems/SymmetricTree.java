@@ -1,6 +1,6 @@
 package problems;
 
-import problems.listnode.TreeNode;
+import problems.util.TreeNode;
 
 public class SymmetricTree {
     public boolean isSymmetric(TreeNode root) {
