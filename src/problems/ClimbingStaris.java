@@ -5,42 +5,18 @@ import java.util.Map;
 
 public class ClimbingStaris {
     public int climbStairs(int n) {
-        // if(n == 1) return 1;
-        // if(n == 2) return 2;
+        int[] dp = new int[n];
 
-        // return climbStairs(n - 2) + climbStairs(n - 1);
+        for(int i = 0; i < n; i++) {
+            if(i == 0) {
+                dp[i] = 1;
+            } else if(i == 1) {
+                dp[i] = 2;
+            } else {
+                dp[i] = dp[i-2] + dp[i-1];
+            }
+        }
 
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(1,1);
-        map.put(2,2);
-
-        return climbStairsRecursive(n, map);
+        return dp[n-1];
     }
-
-    private int climbStairsRecursive(int n, Map<Integer, Integer> map) {
-        if(map.containsKey(n)) return map.get(n);
-
-        map.put(n, climbStairsRecursive(n-1, map) + climbStairsRecursive(n-2, map));
-
-        return map.get(n);
-    }
-    // public int climbStairs(int n) {
-    //     int[] arr = new int[n];
-
-    //     for(int i = arr.length-1; i >= 0; i--) {
-    //         if(i == arr.length-1) {
-    //             arr[i] = 1;
-    //             continue;
-    //         }
-    //         if(i == arr.length-2) {
-    //             arr[i] = 2;
-    //             continue;
-    //         }
-    //         arr[i] = arr[i+1] + arr[i+2];
-    //     }
-
-    //     //System.out.println(Arrays.toString(arr));
-
-    //     return arr[0];
-    // }
 }
