@@ -1,9 +1,6 @@
 package problems;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class ClimbingStaris {
+public class ClimbingStairs {
     public int climbStairs(int n) {
         int[] dp = new int[n];
 
