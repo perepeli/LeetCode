@@ -31,8 +31,6 @@ public class HouseRobber {
             dp[i] = nums[i] + Math.max((i+2 < length ? dp[i+2] : 0), (i+3 < length ? dp[i+3] : 0));
         }
 
-        System.out.println(Arrays.toString(dp));
-
         return Math.max(dp[0], dp[1]);
     }
 }
