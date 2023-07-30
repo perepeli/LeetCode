@@ -1,7 +1,9 @@
 package problems;
 
+import java.util.Map;
+
 public class MinCostClimbingStairs {
-    ublic int minCostClimbingStairs(int[] cost) {
+    public int minCostClimbingStairs(int[] cost) {
         int length = cost.length;
         if(length <= 1) return 0;
 
