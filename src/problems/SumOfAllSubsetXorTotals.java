@@ -8,10 +8,9 @@ public class SumOfAllSubsetXorTotals {
         List<List<Integer>> list = new ArrayList<>();
         backtrack(list, new ArrayList<>(), nums, 0);
 
-        Integer res = list.stream().map(e -> {
-            if(e.size() == 0) return 0;
-            return e.stream().reduce((x, y) -> x ^ y).get();
-        }).reduce(0, Integer::sum);
+        Integer res = list.stream()
+                .map(e -> e.stream().reduce((x, y) -> x ^ y).orElse(0))
+                .reduce(0, Integer::sum);
 
         return res;
     }
