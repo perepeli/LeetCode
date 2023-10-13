@@ -6,9 +6,18 @@ import java.util.Queue;
 public class KClosestPointToOrigin {
     public int[][] kClosest(int[][] points, int k) {
         Queue<int[]> heap = new PriorityQueue<>(
-                (int[] p1, int[] p2) -> Double.compare(distance(p1), distance(p2)));
+                (int[] p1, int[] p2) -> Double.compare(distance(p2), distance(p1)));
 
-        for(int[] e: points) heap.add(new int[]{e[0], e[1]});
+        for(int[] e: points) {
+            if(heap.size() < k) {
+                heap.add(new int[]{e[0], e[1]});
+            } else {
+                if(distance(heap.peek()) > distance(e)) {
+                    heap.poll();
+                    heap.offer(e);
+                }
+            }
+        }
 
         int[][] out = new int[k][2];
 
