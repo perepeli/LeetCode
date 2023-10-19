@@ -11,7 +11,7 @@ public class TaskScheduler {
         int res = 0;
 
         Queue<Map.Entry<Character, Integer>> pq = new PriorityQueue<>((a, b) -> b.getValue() - a.getValue());
-        map.entrySet().forEach(e -> pq.offer(e));
+        map.entrySet().forEach(pq::offer);
 
         while(!pq.isEmpty()) {
             int cooldown = n + 1;
