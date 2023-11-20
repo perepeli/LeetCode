@@ -1,53 +1,56 @@
 package problems;
 
+import java.util.Arrays;
+
 public class WordSearch {
-    private char[][] board;
-    private int ROWS;
-    private int COLS;
+    static final int[][] directions = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public boolean exist(char[][] board, String word) {
-        this.board = board;
-        this.ROWS = board.length;
-        this.COLS = board[0].length;
+        int row = board.length;
+        int col = board[0].length;
 
-        for(int row = 0; row < this.ROWS; row++) {
-            for(int col = 0; col < this.COLS; col++) {
-                if(this.backtrack(row, col, word, 0)) {
-                    return true;
-                }
+        boolean[][] visited = new boolean[row][col];
+
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(backtrack(board, word, 0, i, j, visited)) return true;
             }
         }
+        for(boolean[] i : visited) {
+            System.out.println(Arrays.toString(i));
+        }
+
         return false;
     }
 
-
-    private boolean backtrack(int row, int col, String word, int index) {
-        /* Step 1). Check the bottom case. */
-        if(index >= word.length()) return true;
-
-        /* Step 2). Check the boundaries */
-        if(row < 0 ||  row == this.ROWS || col < 0 || col == this.COLS
-                || this.board[row][col] != word.charAt(index))
-            return false;
-
-        /* Step 3). Explore the neighbours in DFS */
-        boolean ret = false;
-        // mark the path before the next exploration
-        this.board[row][col] = '#';
-
-        // [0][0] -> right
-        // [1][1] -> bottom
-        // [2][2] -> left
-        // [3][3] -> up
-        int[] rowOffset = {0, 1, 0, -1};
-        int[] colOffset = {1, 0, -1, 0};
-
-        for(int d = 0; d < 4; d++) {
-            ret = this.backtrack(row + rowOffset[d], col + colOffset[d], word, index + 1);
-            if(ret) break;
+    private boolean backtrack(char[][] board, String word, int index, int i, int j, boolean[][] visited) {
+        if(index == word.length()) {
+            return true;
         }
-        /* Step 4). Clean up and return result. */
-        this.board[row][col] = word.charAt(index);
-        return ret;
+        if(i < 0 || j < 0 || i >= board.length || j >= board[0].length) {
+            return false;
+        }
+        if(visited[i][j]) {
+            return false;
+        }
+        if(board[i][j] == word.charAt(index)) {
+            boolean found = false;
+
+            for(int[] direction : directions) {
+                visited[i][j] = true;
+
+                int R = direction[0];
+                int C = direction[1];
+
+                found = backtrack(board, word, index + 1, i + R, j + C, visited);
+
+                visited[i][j] = false;
+
+                if(found) break;
+            }
+
+            return found;
+        }
+        return false;
     }
 }
