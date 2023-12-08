@@ -8,9 +8,7 @@ public class TargetSum {
     }
 
     private void backtrack(int[] nums, int index, int target, int sum, int[] res) {
-        if(index > nums.length) {
-            return;
-        } else if (index == nums.length) {
+        if (index == nums.length) {
             if(sum == target) res[0] += 1;
         } else {
             backtrack(nums, index + 1, target, sum + nums[index], res);
