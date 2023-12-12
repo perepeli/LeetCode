@@ -1,5 +1,8 @@
 package problems;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class LetterTilePossibilities {
     public int numTilePossibilities(String tiles) {
         Set<String> set = new HashSet<>();
