@@ -11,26 +11,22 @@ public class GenerateParentheses {
     }
 
     private void backtrack(int maxPairs, int left, int right, StringBuilder sb, List<String> result) {
-        if(left == maxPairs && right == maxPairs) { // we're done
+        if(left == maxPairs && right == maxPairs) {
             result.add(sb.toString());
-            return;
-        }
-
-        if(left == maxPairs) { // left is full, can add only right
-            sb.append(')');
-            backtrack(maxPairs, left, right + 1, sb, result);
-            sb.deleteCharAt(sb.length() - 1);
-        } else { // left is not full, have place for both
-            if(left > right) { // both
-                sb.append('(');
-                backtrack(maxPairs, left + 1, right, sb, result);
-                sb.deleteCharAt(sb.length() - 1);
-
+        } else {
+            if(left == maxPairs) { // left full, only right
                 sb.append(')');
                 backtrack(maxPairs, left, right + 1, sb, result);
                 sb.deleteCharAt(sb.length() - 1);
-            } else { // only left
-                sb.append('(');
+            } else {
+
+                if(left > right) { // can add right, there's a matching left
+                    sb.append(')');
+                    backtrack(maxPairs, left, right + 1, sb, result);
+                    sb.deleteCharAt(sb.length() - 1);
+                }
+
+                sb.append('('); // left
                 backtrack(maxPairs, left + 1, right, sb, result);
                 sb.deleteCharAt(sb.length() - 1);
             }
