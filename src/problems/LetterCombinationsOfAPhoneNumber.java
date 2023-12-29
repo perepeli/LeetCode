@@ -21,20 +21,19 @@ public class LetterCombinationsOfAPhoneNumber {
                 '9', "wxyz"
         );
 
-        backtrack(map, digits, 0, new StringBuilder(), res);
+        backtrack(digits.toCharArray(), 0, map, new StringBuilder(), res);
+
         return res;
     }
 
-    private void backtrack(Map<Character, String> map, String digits, int index, StringBuilder sb, List<String> res) {
-        if(sb.length() == digits.length()) {
+    private void backtrack(char[] arr, int index, Map<Character, String> map, StringBuilder sb, List<String> res) {
+        if(index == arr.length) {
             res.add(sb.toString());
         } else {
-            for(int i = 0; i < map.get(digits.charAt(index)).length(); i++) {
-                char ch = map.get(digits.charAt(index)).charAt(i);
-                sb.append(ch);
-                backtrack(map, digits, index + 1, sb, res);
+            for(char c : map.get(arr[index]).toCharArray()) {
+                sb.append(c);
+                backtrack(arr, index + 1, map, sb, res);
                 sb.deleteCharAt(sb.length() - 1);
-
             }
         }
     }
