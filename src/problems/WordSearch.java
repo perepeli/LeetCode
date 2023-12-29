@@ -3,7 +3,7 @@ package problems;
 import java.util.Arrays;
 
 public class WordSearch {
-    tatic final int[][] DIRECTIONS = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    static final int[][] DIRECTIONS = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
     public boolean exist(char[][] board, String word) {
         char[] wordArray = word.toCharArray();
