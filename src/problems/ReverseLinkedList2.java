@@ -1,5 +1,7 @@
 package problems;
 
+import problems.util.ListNode;
+
 public class ReverseLinkedList2 {
     public ListNode reverseBetween(ListNode head, int left, int right) {
         if(left >= right) return head;
