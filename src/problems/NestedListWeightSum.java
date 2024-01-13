@@ -29,7 +29,7 @@ interface NestedInteger {
 //    NestedInteger(int value);
     boolean isInteger();
     Integer getInteger();
-    public void setInteger(int value);
-    public void add(NestedInteger ni);
-    public List<NestedInteger> getList();
+    void setInteger(int value);
+    void add(NestedInteger ni);
+    List<NestedInteger> getList();
 }
