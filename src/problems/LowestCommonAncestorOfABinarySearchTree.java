@@ -4,36 +4,41 @@ import problems.util.TreeNode;
 
 public class LowestCommonAncestorOfABinarySearchTree {
 
-    private TreeNode res;
-
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        res = null;
-        TreeNode min = p.val < q.val ? p : q;
-        TreeNode max = p.val > q.val ? p : q;
-        recursive(root, min, max);
-        return res;
+        Object[] res = dfs(root, p.val, q.val);
+        return (TreeNode) res[2];
     }
 
-    private boolean recursive(TreeNode node, TreeNode p, TreeNode q) {
-        if(node == null) return false;
+    private Object[] dfs(TreeNode root, int p, int q) {
+        if(root == null) return new Object[]{false, false, null};
 
-        if(p.val < node.val && q.val < node.val) {
-            return recursive(node.left, p, q);
-        } else if(p.val > node.val && q.val > node.val) {
-            return recursive(node.right, p, q);
-        } else {
-            int curr = (node.val == p.val || node.val == q.val) ? 1 : 0;
-            int left = recursive(node.left, p, q) ? 1 : 0;
-            int right = recursive(node.right, p, q) ? 1 : 0;
+        if(root.val > p && root.val > q) return dfs(root.left, p, q);
+        if(root.val < p && root.val < q) return dfs(root.right, p, q);
 
-            if(curr + left + right == 2) {
-                res = node;
-                return true;
-            } else if (curr + left + right == 1){
-                return true;
-            } else {
-                return false;
-            }
+        Object[] leftRes = dfs(root.left, p, q);
+        boolean LL = (boolean) leftRes[0];
+        boolean LR = (boolean) leftRes[1];
+
+        if(LL && LR) return leftRes;
+        if(root.val == p || root.val == q) {
+            if(LL || LR) return new Object[]{true, true, root};
         }
+
+        Object[] rightRes = dfs(root.right, p, q);
+        boolean RL = (boolean) rightRes[0];
+        boolean RR = (boolean) rightRes[1];
+
+        if(RL && RR) return rightRes;
+        if(root.val == p || root.val == q) {
+            if(RL || RR) return new Object[]{true, true, root};
+        }
+
+        if((LL || LR) && (RL || RR)) return new Object[]{true, true, root};
+        if(LL || LR) return new Object[]{true, false, null};
+        if(RL || RR) return new Object[]{false, true, null};
+
+        if(root.val == p || root.val == q) return new Object[]{true, false, null};
+
+        return new Object[]{false, false, null};
     }
 }
