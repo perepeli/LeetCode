@@ -3,23 +3,38 @@ package problems;
 import problems.util.TreeNode;
 
 public class LowestCommonAncestorOfABinaryTree {
-    private TreeNode res;
-
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        res = null;
-        recursive(root, p, q);
-        return res;
+        Object[] res = dfs(root, p.val, q.val);
+        return (TreeNode) res[2];
     }
 
-    private boolean recursive(TreeNode node, TreeNode p, TreeNode q) {
-        if(node == null) return false;
+    private Object[] dfs(TreeNode root, int p, int q) {
+        if(root == null) return new Object[]{false, false, null};
 
-        int left = recursive(node.left, p, q) ? 1 : 0;
-        int right = recursive(node.right, p, q) ? 1 : 0;
-        int curr = node.val == p.val || node.val == q.val ? 1 : 0;
+        Object[] leftRes = dfs(root.left, p, q);
+        boolean LL = (boolean) leftRes[0];
+        boolean LR = (boolean) leftRes[1];
 
-        if(left + right + curr >= 2) res = node;
+        if(LL && LR) return leftRes;
+        if(root.val == p || root.val == q) {
+            if(LL || LR) return new Object[]{true, true, root};
+        }
 
-        return left + right + curr > 0;
+        Object[] rightRes = dfs(root.right, p, q);
+        boolean RL = (boolean) rightRes[0];
+        boolean RR = (boolean) rightRes[1];
+
+        if(RL && RR) return rightRes;
+        if(root.val == p || root.val == q) {
+            if(RL || RR) return new Object[]{true, true, root};
+        }
+
+        if((LL || LR) && (RL || RR)) return new Object[]{true, true, root};
+        if(LL || LR) return new Object[]{true, false, null};
+        if(RL || RR) return new Object[]{false, true, null};
+
+        if(root.val == p || root.val == q) return new Object[]{true, false, null};
+
+        return new Object[]{false, false, null};
     }
 }
