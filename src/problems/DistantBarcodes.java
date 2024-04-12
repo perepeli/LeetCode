@@ -19,17 +19,21 @@ public class DistantBarcodes {
         int[] res = new int[barcodes.length];
         int index = 0;
         while(!pq.isEmpty()) {
-            int[] p1 = pq.poll();
-            int[] p2 = pq.poll();
+            int[] p1;
+            int[] p2;
 
-            p1[1]--;
-            if(p2 != null) p2[1]--;
+            if(pq.size() > 1) {
+                p1 = pq.poll();
+                p2 = pq.poll();
 
-            res[index++] = p1[0];
-            if(p2 != null) res[index++] = p2[0];
+                res[index++] = p1[0];
+                res[index++] = p2[0];
 
-            if(p1[1] > 0) pq.offer(p1);
-            if(p2 != null && p2[1] > 0) pq.offer(p2);
+                if(--p1[1] > 0) pq.offer(p1);
+                if(--p2[1] > 0) pq.offer(p2);
+            } else {
+                res[index++] = pq.poll()[0];
+            }
         }
 
         return res;
