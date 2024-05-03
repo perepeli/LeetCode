@@ -2,22 +2,32 @@ package problems;
 
 import problems.util.TreeNode;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class SumOfLeftLeaves {
     public int sumOfLeftLeaves(TreeNode root) {
-        int[] res = new int[]{0};
-        dfs(root, false, res);
-        return res[0];
-    }
+        if (root == null) return 0;
 
-    private void dfs(TreeNode node, boolean isLeft, int[] res) {
-        if(node == null) return;
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.addLast(root);
 
-        if(node.left == null && node.right == null) {
-            if(isLeft) res[0] += node.val;
-            return;
+        int res = 0;
+
+        while(!queue.isEmpty()) {
+            TreeNode node = queue.removeFirst();
+
+            if(node.left != null) {
+                if(node.left.left == null && node.left.right == null) {
+                    res += node.left.val;
+                } else {
+                    queue.addLast(node.left);
+                }
+            }
+
+            if(node.right != null) queue.addLast(node.right);
         }
 
-        dfs(node.left, true, res);
-        dfs(node.right, false, res);
+        return res;
     }
 }
