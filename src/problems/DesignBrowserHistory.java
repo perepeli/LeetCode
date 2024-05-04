@@ -6,7 +6,7 @@ import java.util.Deque;
 public class DesignBrowserHistory {
     private Deque<String> backwardStack;
     private Deque<String> forwardStack;
-    String currentUrl;
+    private String currentUrl;
 
     public DesignBrowserHistory(String homepage) {
         backwardStack = new ArrayDeque<>();
