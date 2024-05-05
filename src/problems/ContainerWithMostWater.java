@@ -3,35 +3,20 @@ package problems;
 public class ContainerWithMostWater {
     public int maxArea(int[] height) {
         int left = 0;
-        int right = height.length-1;
+        int right = height.length - 1;
 
-        int distance = right - left;
-        int leftHeight = height[left];
-        int rightheight = height[right];
+        int max = 0;
 
-        int maxArea = 0;
+        while(left < right) {
+            int leftHeight = height[left];
+            int rightHeight = height[right];
 
+            max = Math.max(max, Math.min(leftHeight, rightHeight) * (right - left));
 
-        while(left != right) {
-            int area;
-            if(leftHeight > rightheight) {
-                area = rightheight * distance;
-
-                right--;
-            } else {
-                area = leftHeight * distance;
-
-                left++;
-            }
-            distance = right - left;
-            leftHeight = height[left];
-            rightheight = height[right];
-
-            if(area > maxArea) {
-                maxArea = area;
-            }
+            if(leftHeight < rightHeight) left++;
+            else right--;
         }
 
-        return maxArea;
+        return max;
     }
 }
