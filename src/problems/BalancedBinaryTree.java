@@ -4,29 +4,18 @@ import problems.util.TreeNode;
 
 public class BalancedBinaryTree {
     public boolean isBalanced(TreeNode root) {
-        return recursive(root).isBalanced;
+        return dfs(root)[1] == 1;
     }
 
-    private Pair recursive(TreeNode root) {
-        if(root == null) return new Pair(-1, true);
+    private int[] dfs(TreeNode node) {
+        if(node == null) return new int[]{0, 1};
+        int[] leftRes = dfs(node.left);
+        int[] rightRes = dfs(node.right);
 
-        Pair left = recursive(root.left);
-        if(!left.isBalanced) return new Pair(-1, false);
+        if(leftRes[1] == 0 || rightRes[1] == 0) return new int[]{-1, 0};
+        if(Math.abs(leftRes[0] - rightRes[0]) > 1) return new int[]{-1, 0};
 
-        Pair right = recursive(root.right);
-        if(!right.isBalanced) return new Pair(-1, false);
+        return new int[]{1 + Math.max(leftRes[0], rightRes[0]), 1};
 
-        if(Math.abs(left.height - right.height) < 2) return new Pair(Math.max(left.height, right.height) + 1, true);
-        return new Pair(-1, false);
-    }
-}
-
-class Pair {
-    public final boolean isBalanced;
-    public final int height;
-
-    public Pair(int height, boolean isBalanced) {
-        this.isBalanced = isBalanced;
-        this.height = height;
     }
 }
