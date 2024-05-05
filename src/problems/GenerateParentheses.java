@@ -5,30 +5,25 @@ import java.util.List;
 
 public class GenerateParentheses {
     public List<String> generateParenthesis(int n) {
-        List<String> result = new ArrayList<>();
-        backtrack(n, 0, 0, new StringBuilder(), result);
-        return result;
+        List<String> res = new ArrayList<>();
+        backtrack(n, 0, 0, new StringBuilder(), res);
+        return res;
     }
 
-    private void backtrack(int maxPairs, int left, int right, StringBuilder sb, List<String> result) {
-        if(left == maxPairs && right == maxPairs) {
-            result.add(sb.toString());
+    private void backtrack(int n, int leftCount, int rightCount, StringBuilder temp, List<String> res) {
+        if(temp.length() == n * 2) {
+            res.add(temp.toString());
         } else {
-            if(left == maxPairs) { // left full, only right
-                sb.append(')');
-                backtrack(maxPairs, left, right + 1, sb, result);
-                sb.deleteCharAt(sb.length() - 1);
-            } else {
+            if(leftCount < n) {
+                temp.append('(');
+                backtrack(n, leftCount + 1, rightCount, temp, res);
+                temp.deleteCharAt(temp.length() - 1);
+            }
 
-                if(left > right) { // can add right, there's a matching left
-                    sb.append(')');
-                    backtrack(maxPairs, left, right + 1, sb, result);
-                    sb.deleteCharAt(sb.length() - 1);
-                }
-
-                sb.append('('); // left
-                backtrack(maxPairs, left + 1, right, sb, result);
-                sb.deleteCharAt(sb.length() - 1);
+            if(rightCount < leftCount) {
+                temp.append(')');
+                backtrack(n, leftCount, rightCount + 1, temp, res);
+                temp.deleteCharAt(temp.length() - 1);
             }
         }
     }
