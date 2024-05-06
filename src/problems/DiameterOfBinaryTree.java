@@ -4,17 +4,18 @@ import problems.util.TreeNode;
 
 public class DiameterOfBinaryTree {
     public int diameterOfBinaryTree(TreeNode root) {
-        int[] out = {0};
-        recursive(root, 0, out);
-        return out[0];
+        return dfs(root)[1];
     }
 
-    private int recursive(TreeNode node, int height, int[] max) {
-        if(node == null) return 0;
+    private int[] dfs(TreeNode node) {
+        if(node == null) return new int[]{0, 0};
+        int[] leftRes = dfs(node.left);
+        int[] rightRes = dfs(node.right);
 
-        int left = recursive(node.left, height, max);
-        int right = recursive(node.right, height, max);
-        max[0] = Math.max(max[0], left + right);
-        return 1 + Math.max(left, right);
+        int leftDepth = leftRes[0];
+        int rightDepth = rightRes[0];
+        int currentMaxDiameter = leftDepth + rightDepth;
+
+        return new int[]{1 + Math.max(leftDepth, rightDepth), Math.max(currentMaxDiameter, Math.max(leftRes[1], rightRes[1]))};
     }
 }
