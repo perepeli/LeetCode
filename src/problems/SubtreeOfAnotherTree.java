@@ -3,25 +3,27 @@ package problems;
 import problems.util.TreeNode;
 
 public class SubtreeOfAnotherTree {
+
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        boolean[] out = new boolean[1];
-        recursive(root, subRoot, out);
-        return out[0];
+        StringBuilder sb1 = new StringBuilder();
+        serializeInternal(root, sb1);
+
+        StringBuilder sb2 = new StringBuilder();
+        serializeInternal(subRoot, sb2);
+
+        return sb1.toString().contains(sb2.toString());
     }
 
-    private void recursive(TreeNode node, TreeNode subRoot, boolean[] out) {
-        if(node == null || out[0]) return;
-
-        recursive(node.left, subRoot, out);
-        if(isSimilar(node, subRoot)) out[0] = true;
-        recursive(node.right, subRoot, out);
-    }
-
-    private boolean isSimilar(TreeNode first, TreeNode second) {
-        if(first == null && second == null) return true;
-        if(first == null || second == null) return false;
-        if(first.val != second.val) return false;
-
-        return isSimilar(first.left, second.left) && isSimilar(first.right, second.right);
+    private void serializeInternal(TreeNode node, StringBuilder sb) {
+        if(node == null) {
+            sb.append("null,");
+        } else {
+            sb.append("|");
+            sb.append(node.val);
+            sb.append("|");
+            sb.append(',');
+            serializeInternal(node.left, sb);
+            serializeInternal(node.right, sb);
+        }
     }
 }
