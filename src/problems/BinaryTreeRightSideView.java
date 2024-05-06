@@ -8,20 +8,18 @@ import java.util.stream.Collectors;
 
 public class BinaryTreeRightSideView {
     public List<Integer> rightSideView(TreeNode root) {
-        Map<Integer, Integer> map = new LinkedHashMap<>();
-
-        recursive(root, 1, map);
-
-        return map.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
+        List<Integer> res = new ArrayList<>();
+        dfs(root, 1, res);
+        return res;
     }
 
-    private void recursive(TreeNode node, int level, Map<Integer, Integer> map) {
+    private void dfs(TreeNode node, int level, List<Integer> res) {
         if(node == null) return;
 
-        map.put(level, node.val);
-
-        recursive(node.left, level + 1, map);
-        recursive(node.right, level + 1, map);
-
+        if(res.size() < level) {
+            res.add(node.val);
+        }
+        dfs(node.right, level + 1, res);
+        dfs(node.left, level + 1, res);
     }
 }
