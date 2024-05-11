@@ -3,36 +3,25 @@ package problems;
 import java.util.PriorityQueue;
 
 public class KthLargestElementInAStream {
-    PriorityQueue<Integer> pq = new PriorityQueue<>();
-    int window;
+    PriorityQueue<Integer> pq;
+    int capacity;
 
     public KthLargestElementInAStream(int k, int[] nums) {
-        window = k;
+        pq = new PriorityQueue<>();
+        capacity = k;
 
-        for (int num : nums) {
-            if (window > 0) {
-                pq.offer(num);
-                window--;
-            } else {
-                if (num > pq.peek()) {
-                    pq.poll();
-                    pq.offer(num);
-                }
-            }
+        for(int i : nums) {
+            add(i);
         }
     }
 
     public int add(int val) {
-        if(window  > 0) {
+        if(pq.size() < capacity) {
             pq.offer(val);
-            window--;
-        } else {
-            if(val > pq.peek()) {
-                pq.poll();
-                pq.offer(val);
-            }
+        } else if(pq.peek() < val) {
+            pq.poll();
+            pq.offer(val);
         }
-
         return pq.peek();
     }
 }
