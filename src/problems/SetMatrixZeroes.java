@@ -19,6 +19,7 @@ public class SetMatrixZeroes {
                 }
             }
         }
+
         for(int i = matrix.length - 1; i >= 0; i--) {
             for(int j = matrix[0].length - 1; j >= 0; j--) {
                 if(matrix[0][j] == 0 || matrix[i][0] == 0) matrix[i][j] = 0;
