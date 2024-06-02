@@ -2,16 +2,10 @@ package problems;
 
 public class ReverseString {
     public void reverseString(char[] s) {
-        helper(0, s.length-1, s);
-    }
-
-    private void helper(int first, int last, char[] str) {
-        if(first >= last) return;
-
-        char temp = str[first];
-        str[first] = str[last];
-        str[last] = temp;
-
-        helper(first+1, last-1, str);
+        for(int i = 0; i < s.length / 2; i++) {
+            char temp = s[i];
+            s[i] = s[s.length - i - 1];
+            s[s.length - i - 1] = temp;
+        }
     }
 }
