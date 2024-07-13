@@ -37,7 +37,7 @@ public class TheEarliestMomentWhenEveryoneBecomeFriends {
             } else if(b == null) {
                 map.get(a).add(edge[2]);
             } else {
-                if(a != b) {
+                if(!a.equals(b)) {
                     Set<Integer> setA = map.get(a);
                     Set<Integer> setB = map.get(b);
 
