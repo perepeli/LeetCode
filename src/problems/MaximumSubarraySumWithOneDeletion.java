@@ -18,9 +18,6 @@ public class MaximumSubarraySumWithOneDeletion {
             prefix[i] = Math.max(arr[i], arr[i] + prefix[i - 1]);
         }
 
-        System.out.println(Arrays.toString(prefix));
-        System.out.println(Arrays.toString(suffix));
-
         int res = Integer.MIN_VALUE;
 
         for(int i = 0; i < arr.length; i++) {
