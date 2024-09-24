@@ -13,7 +13,6 @@ public class VerticalOrderTraversalOfABinaryTree {
         dfs(root, 0, 0, res);
 
         Collections.sort(res, (int[] a, int[] b) -> a[2] - b[2] == 0 ? a[1] - b[1] == 0 ? a[0] - b[0] : a[1] - b[1] : a[2] - b[2]);
-        res.forEach(arr -> System.out.println(Arrays.toString(arr)));
 
         List<List<Integer>> finalRes = new ArrayList<>();
         List<Integer> temp = new ArrayList<>();
