@@ -1,5 +1,6 @@
 package problems;
 
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -7,39 +8,19 @@ public class PopulatingNextRightPointersInEachNode {
 
     public Node connect(Node root) {
         if(root == null) return null;
-        Queue<Node> q1 = new LinkedList<>();
-        Queue<Node> q2 = new LinkedList<>();
+        Deque<Node> queue = new LinkedList<>();
+        queue.offer(root);
 
-        q1.offer(root);
+        while(!queue.isEmpty()) {
+            int levelSize = queue.size();
+            Node prev = null;
 
-        while(!q1.isEmpty() || !q2.isEmpty()) {
-            if(!q1.isEmpty()) {
-                Node prev = q1.poll();
-
-                while(!q1.isEmpty()) {
-                    Node next = q1.poll();
-                    if(prev.left != null) q2.offer(prev.left);
-                    if(prev.right != null) q2.offer(prev.right);
-                    prev.next = next;
-                    prev = next;
-                }
-
-                if(prev.left != null) q2.offer(prev.left);
-                if(prev.right != null) q2.offer(prev.right);
-
-            } else if(!q2.isEmpty()) {
-                Node prev = q2.poll();
-
-                while(!q2.isEmpty()) {
-                    Node next = q2.poll();
-                    if(prev.left != null) q1.offer(prev.left);
-                    if(prev.right != null) q1.offer(prev.right);
-                    prev.next = next;
-                    prev = next;
-                }
-
-                if(prev.left != null) q1.offer(prev.left);
-                if(prev.right != null) q1.offer(prev.right);
+            for(int i = levelSize - 1; i >= 0; i--) {
+                Node curr = queue.poll();
+                if(prev != null) prev.next = curr;
+                if(curr.left != null) queue.offer(curr.left);
+                if(curr.right != null) queue.offer(curr.right);
+                prev = curr;
             }
         }
 
