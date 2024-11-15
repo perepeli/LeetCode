@@ -7,42 +7,36 @@ import java.util.Set;
 
 public class ValidSudoku {
     public boolean isValidSudoku(char[][] board) {
-        int m = board.length;
-        int n = board[0].length;
+        int N = 9;
 
-        Map<Integer, Set<Character>> rows = new HashMap<>();
-        Map<Integer, Set<Character>> cols = new HashMap<>();
-        Map<Integer, Map<Integer, Set<Character>>> quadrant = new HashMap<>();
+        HashSet<Character>[] rows = new HashSet[N];
+        HashSet<Character>[] cols = new HashSet[N];
+        HashSet<Character>[] boxes = new HashSet[N];
 
-        for(int row = 0; row < m; row++) {
-            for(int col = 0; col < n; col++) {
-                if(board[row][col] != '.') {
-                    int quadrantRow = map(row);
-                    int quadrantCol = map(col);
+        for(int r = 0; r < N; r++) {
+            rows[r] = new HashSet<Character>();
+            cols[r] = new HashSet<Character>();
+            boxes[r] = new HashSet<Character>();
+        }
 
-                    if(!rows.containsKey(row)) rows.put(row, new HashSet<>());
-                    if(!cols.containsKey(col)) cols.put(col, new HashSet<>());
-                    if(!quadrant.containsKey(quadrantRow)) quadrant.put(quadrantRow, new HashMap<>());
-                    if(!quadrant.get(quadrantRow).containsKey(quadrantCol)) quadrant.get(quadrantRow).put(quadrantCol, new HashSet<>());
+        for (int r = 0; r < N; r++) {
+            for (int c = 0; c < N; c++) {
+                char val = board[r][c];
 
-                    if(rows.get(row).contains(board[row][col])) return false;
-                    if(cols.get(col).contains(board[row][col])) return false;
-                    if(quadrant.get(quadrantRow).get(quadrantCol).contains(board[row][col])) return false;
+                if(val == '.') continue;
 
-                    rows.get(row).add(board[row][col]);
-                    cols.get(col).add(board[row][col]);
-                    quadrant.get(quadrantRow).get(quadrantCol).add(board[row][col]);
-                }
+                if(rows[r].contains(val)) return false;
+                rows[r].add(val);
+
+                if(cols[c].contains(val)) return false;
+                cols[c].add(val);
+
+                int index = (r / 3) * 3 + c / 3;
+                if(boxes[index].contains(val)) return false;
+                boxes[index].add(val);
             }
         }
 
         return true;
-    }
-
-    private int map(int num) {
-        if(num < 3) return 0;
-        if(num < 6) return 1;
-        if(num < 9) return 2;
-        throw new IllegalArgumentException("Invalid input");
     }
 }
