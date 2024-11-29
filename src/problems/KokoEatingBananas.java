@@ -1,15 +1,19 @@
 package problems;
 
+import java.util.Arrays;
+
 public class KokoEatingBananas {
     public int minEatingSpeed(int[] piles, int h) {
+        Arrays.sort(piles);
+        int max = Integer.MIN_VALUE;
+        for(int i : piles) max = Math.max(max, i);
+
+        int right = max;
         int left = 1;
-        int right = left;
-        for(int i : piles) right = Math.max(right, i);
 
         while(left < right) {
             int mid = left + (right - left) / 2;
-
-            if(canEatWithin(piles, h, mid)) {
+            if(canEat(piles, mid, h)) {
                 right = mid;
             } else {
                 left = mid + 1;
@@ -19,12 +23,10 @@ public class KokoEatingBananas {
         return left;
     }
 
-    private boolean canEatWithin(int[] piles, int hours, int items) {
-        int tempHours = 0;
-
+    private boolean canEat(int[] piles, int speed, int h) {
         for(int i : piles) {
-            tempHours += (int) Math.ceil((double) i / (double) items);
-            if(tempHours > hours) return false;
+            h -= (int) Math.ceil((double) i / speed);
+            if(h < 0) return false;
         }
         return true;
     }
