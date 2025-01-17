@@ -28,8 +28,6 @@ public class FindWinnerOnATicTacToeGame {
             if(diagonalRight[player] == 3) return playerSign;
         }
 
-        for(int[] i : cols) System.out.println(Arrays.toString(i));
-
         if(moves.length < 9) return "Pending";
         return "Draw";
     }
