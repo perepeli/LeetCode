@@ -2,16 +2,21 @@ package problems;
 
 public class RotateArray {
     public void rotate(int[] nums, int k) {
-        int len = nums.length;
-        int[] temp = new int[len];
+        k = k % nums.length;
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, nums.length - 1);
+    }
 
-        for(int i = 0; i < nums.length; i++) {
+    private void reverse(int[] arr, int left, int right) {
+        if(left >= right) return;
 
-            temp[(i + k) % len] = nums[i];
-        }
-
-        for(int i = 0; i < temp.length; i++) {
-            nums[i] = temp[i];
+        while(left < right) {
+            int temp = arr[right];
+            arr[right] = arr[left];
+            arr[left] = temp;
+            left++;
+            right--;
         }
     }
 }
