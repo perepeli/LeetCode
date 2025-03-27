@@ -1,31 +1,25 @@
 package problems;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class ValidParentheses {
     public boolean isValid(String s) {
+        Deque<Character> deque = new ArrayDeque<>();
 
-        Stack<Character> stack = new Stack<>();
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
 
-        for(char ch : s.toCharArray()) {
-            if(ch == '(' || ch == '[' || ch == '{') {
-                stack.push(ch);
-            }
-
-            if(ch == ')' || ch == ']' || ch == '}') {
-                if(stack.isEmpty()) return false;
-                char potentialLeft = stack.pop();
-
-                if(potentialLeft == '(' && ch == ')') continue;
-                if(potentialLeft == '[' && ch == ']') continue;
-                if(potentialLeft == '{' && ch == '}') continue;
-                return false;
+            if(c == ')') {
+                if(deque.isEmpty() || deque.removeLast() != '(') return false;
+            } else if(c == '}') {
+                if(deque.isEmpty() || deque.removeLast() != '{') return false;
+            } else if(c == ']') {
+                if(deque.isEmpty() || deque.removeLast() != '[') return false;
+            } else {
+                deque.addLast(c);
             }
         }
 
-        if(stack.size() != 0) return false;
-        return true;
+        return deque.isEmpty();
     }
 }
