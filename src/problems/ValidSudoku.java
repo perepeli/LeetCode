@@ -7,36 +7,29 @@ import java.util.Set;
 
 public class ValidSudoku {
     public boolean isValidSudoku(char[][] board) {
-        int N = 9;
+        boolean[][] cols = new boolean[9][9];
+        boolean[][] rows = new boolean[9][9];
+        boolean[][] boxes = new boolean[9][9];
 
-        HashSet<Character>[] rows = new HashSet[N];
-        HashSet<Character>[] cols = new HashSet[N];
-        HashSet<Character>[] boxes = new HashSet[N];
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[0].length; j++) {
+                char c = board[i][j];
+                if(Character.isDigit(c)) {
+                    int index = (int)(c - '0' - 1);
 
-        for(int r = 0; r < N; r++) {
-            rows[r] = new HashSet<Character>();
-            cols[r] = new HashSet<Character>();
-            boxes[r] = new HashSet<Character>();
-        }
+                    if(cols[j][index]) return false;
+                    cols[j][index] = true;
 
-        for (int r = 0; r < N; r++) {
-            for (int c = 0; c < N; c++) {
-                char val = board[r][c];
+                    if(rows[i][index]) return false;
+                    rows[i][index] = true;
 
-                if(val == '.') continue;
+                    int boxIndex = 3 * (i / 3) + (j / 3);
 
-                if(rows[r].contains(val)) return false;
-                rows[r].add(val);
-
-                if(cols[c].contains(val)) return false;
-                cols[c].add(val);
-
-                int index = (r / 3) * 3 + c / 3;
-                if(boxes[index].contains(val)) return false;
-                boxes[index].add(val);
+                    if(boxes[boxIndex][index]) return false;
+                    boxes[boxIndex][index] = true;
+                }
             }
         }
-
         return true;
     }
 }
