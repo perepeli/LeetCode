@@ -3,52 +3,49 @@ package problems;
 import java.util.HashMap;
 import java.util.Map;
 
-class TrieNode {
-    Map<Character, TrieNode> children = new HashMap<>();
-    boolean word = false;
-    public TrieNode() {}
-}
 public class DesignAddAndSearchWordsDataStructure {
-    TrieNode trie;
+    private static class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        boolean isWord = false;
+    }
+
+    private TrieNode root;
 
     public DesignAddAndSearchWordsDataStructure() {
-        trie = new TrieNode();
+        root = new TrieNode();
     }
 
     public void addWord(String word) {
-        TrieNode node = trie;
-
-        for (char ch : word.toCharArray()) {
-            if (!node.children.containsKey(ch)) {
-                node.children.put(ch, new TrieNode());
-            }
-            node = node.children.get(ch);
+        TrieNode temp = root;
+        for(int i = 0; i < word.length(); i++) {
+            int index = word.charAt(i) - 'a';
+            if(temp.children[index] == null) temp.children[index] = new TrieNode();
+            temp = temp.children[index];
         }
-        node.word = true;
-    }
-
-    public boolean searchInNode(String word, TrieNode node) {
-        for (int i = 0; i < word.length(); ++i) {
-            char ch = word.charAt(i);
-            if (!node.children.containsKey(ch)) {
-
-                if (ch == '.') {
-                    for (char x : node.children.keySet()) {
-                        TrieNode child = node.children.get(x);
-                        if (searchInNode(word.substring(i + 1), child)) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            } else {
-                node = node.children.get(ch);
-            }
-        }
-        return node.word;
+        temp.isWord = true;
     }
 
     public boolean search(String word) {
-        return searchInNode(word, trie);
+        return searchDfs(root, word, 0);
+    }
+
+    private boolean searchDfs(TrieNode temp, String word, int index) {
+        if(index == word.length()) {
+            return temp.isWord;
+        }
+
+        char c = word.charAt(index);
+
+        if(c == '.') {
+            for(int i = 0; i < temp.children.length; i++) {
+                if(temp.children[i] == null) continue;
+                if(searchDfs(temp.children[i], word, index + 1)) return true;
+            }
+            return false;
+        } else {
+            int childIndex = c - 'a';
+            if(temp.children[childIndex] == null) return false;
+            return searchDfs(temp.children[childIndex], word, index + 1);
+        }
     }
 }
