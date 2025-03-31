@@ -4,29 +4,29 @@ import java.util.Arrays;
 
 public class KokoEatingBananas {
     public int minEatingSpeed(int[] piles, int h) {
-        Arrays.sort(piles);
-        int max = Integer.MIN_VALUE;
-        for(int i : piles) max = Math.max(max, i);
+        int maxSpeed = 0;
+        for(int i : piles) {
+            maxSpeed = Math.max(maxSpeed, i);
+        }
 
-        int right = max;
         int left = 1;
+        int right = maxSpeed;
 
         while(left < right) {
             int mid = left + (right - left) / 2;
-            if(canEat(piles, mid, h)) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
+            if(canFinish(piles, h, mid)) right = mid;
+            else left = mid + 1;
         }
 
         return left;
     }
 
-    private boolean canEat(int[] piles, int speed, int h) {
+    private boolean canFinish(int[] piles, int h, int speed) {
+        int totalHoursWasted = 0;
         for(int i : piles) {
-            h -= (int) Math.ceil((double) i / speed);
-            if(h < 0) return false;
+            int hoursWasted = (i + speed - 1) / speed;
+            totalHoursWasted += hoursWasted;
+            if(totalHoursWasted > h) return false;
         }
         return true;
     }
