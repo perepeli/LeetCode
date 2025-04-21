@@ -12,8 +12,8 @@ public class TheSkylineProblem {
 
         events.sort((a, b) -> {
             if (a[0] != b[0]) return a[0] - b[0];
-            if (a[2] != b[2]) return b[2] - a[2];
-            return a[2] == 1 ? b[1] - a[1] : a[1] - b[1];
+            if (a[2] != b[2]) return b[2] - a[2]; // Start (-1) before End (+1)
+            return a[2] == 1 ? b[1] - a[1] : a[1] - b[1]; // Higher for starts, lower for ends
         });
 
 
@@ -27,9 +27,12 @@ public class TheSkylineProblem {
         int maxHeight = 0;
 
         for(int[] i : events) {
+            int currHeight = i[1];
+
             if(i[2] == 1) {
                 heightFreq.put(i[1], heightFreq.getOrDefault(i[1], 0) + 1);
                 if(heightFreq.get(i[1]) == 1) maxHeap.offer(i[1]);
+                //maxHeap.offer(i[1]);
             } else {
                 heightFreq.put(i[1], heightFreq.get(i[1]) - 1);
                 if(heightFreq.get(i[1]) == 0) heightFreq.remove(i[1]);
