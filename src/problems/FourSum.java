@@ -20,7 +20,7 @@ public class FourSum {
         for (int i = start; i < nums.length; ++i) {
             if (i == start || nums[i - 1] != nums[i]) {
                 for (List<Integer> subset : kSum(nums, target - nums[i], i + 1, k - 1)) {
-                    res.add(new ArrayList<>(Arrays.asList(nums[i])));
+                    res.add(new ArrayList<>(List.of(nums[i])));
                     res.get(res.size() - 1).addAll(subset);
                 }
             }
