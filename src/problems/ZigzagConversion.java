@@ -1,34 +1,37 @@
 package problems;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ZigzagConversion {
     public String convert(String s, int numRows) {
-        if (numRows == 1) {
+        if (numRows == 1 || numRows >= s.length()) {
             return s;
         }
 
-        StringBuilder answer = new StringBuilder();
-        int n = s.length();
-        int charsInSection = 2 * (numRows - 1);
+        int idx = 0, d = 1;
+        List<Character>[] rows = new ArrayList[numRows];
+        for (int i = 0; i < numRows; i++) {
+            rows[i] = new ArrayList<>();
+        }
 
-        for (int currRow = 0; currRow < numRows; ++currRow) {
-            int index = currRow;
+        for (char c : s.toCharArray()) {
+            rows[idx].add(c);
+            if (idx == 0) {
+                d = 1;
+            } else if (idx == numRows - 1) {
+                d = -1;
+            }
+            idx += d;
+        }
 
-            while (index < n) {
-                answer.append(s.charAt(index));
-
-                if (currRow != 0 && currRow != numRows - 1) {
-                    int charsInBetween = charsInSection - 2 * currRow;
-                    int secondIndex = index + charsInBetween;
-
-                    if (secondIndex < n) {
-                        answer.append(s.charAt(secondIndex));
-                    }
-                }
-
-                index += charsInSection;
+        StringBuilder result = new StringBuilder();
+        for (List<Character> row : rows) {
+            for (char c : row) {
+                result.append(c);
             }
         }
 
-        return answer.toString();
+        return result.toString();
     }
 }
