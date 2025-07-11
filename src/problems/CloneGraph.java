@@ -10,25 +10,21 @@ import java.util.Set;
 
 public class CloneGraph {
     public Node cloneGraph(Node node) {
-        if(node == null) return null;
-        Map<Node, Node> map = new HashMap<>();
-        dfs(node, new HashSet<>(), map);
-        return map.get(node);
+        return deepCloneInternal(node, new HashMap<>());
     }
 
-    private void dfs(Node node, Set<Node> visitSet, Map<Node, Node> map) {
-        if(visitSet.contains(node)) return;
-        visitSet.add(node);
+    private Node deepCloneInternal(Node node, Map<Node, Node> map) {
+        if(node == null) return null;
 
-        if(!map.containsKey(node)) map.put(node, new Node(node.val));
+        if(map.containsKey(node)) return map.get(node);
 
-        System.out.println(node.val);
+        Node clonedNode = new Node(node.val);
+        map.put(node, clonedNode);
 
-        for(Node e : node.neighbors) {
-            if(!map.containsKey(e)) map.put(e, new Node(e.val));
-            map.get(node).neighbors.add(map.get(e));
-
-            dfs(e, visitSet, map);
+        for(Node innerNode : node.neighbors) {
+            clonedNode.neighbors.add(deepCloneInternal(innerNode, map));
         }
+
+        return clonedNode;
     }
 }
