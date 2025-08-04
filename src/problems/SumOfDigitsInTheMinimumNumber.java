@@ -1,5 +1,7 @@
 package problems;
 
+import java.util.Arrays;
+
 public class SumOfDigitsInTheMinimumNumber {
     public int sumOfDigits(int[] nums) {
         int min = Arrays.stream(nums).min().getAsInt();
