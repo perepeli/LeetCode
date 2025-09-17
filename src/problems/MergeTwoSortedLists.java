@@ -9,31 +9,19 @@ public class MergeTwoSortedLists {
         ListNode temp = dummy;
 
         while(list1 != null && list2 != null) {
-            ListNode curr = new ListNode();
-            if(list1.val < list2.val) {
-                curr.val = list1.val;
+            if(list1.val <= list2.val) {
+                temp.next = list1;
                 list1 = list1.next;
             } else {
-                curr.val = list2.val;
+                temp.next = list2;
                 list2 = list2.next;
             }
-            temp.next = curr;
-            temp = curr;
+
+            temp = temp.next;
         }
 
-        while(list1 != null) {
-            ListNode curr = new ListNode(list1.val);
-            list1 = list1.next;
-            temp.next = curr;
-            temp = curr;
-        }
+        temp.next = list1 == null ? list2 : list1;
 
-        while(list2 != null) {
-            ListNode curr = new ListNode(list2.val);
-            list2 = list2.next;
-            temp.next = curr;
-            temp = curr;
-        }
 
         return dummy.next;
     }
