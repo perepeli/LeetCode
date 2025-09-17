@@ -14,25 +14,17 @@ public class RomanToInteger {
                 'M', 1000
         );
 
-        char[] arr = s.toCharArray();
+        int res = 0;
 
-        int result = 0;
-
-        for (int i = arr.length - 1; i >= 0; i--) {
-            char currentSymbol = arr[i];
-            int currentValue = map.get(currentSymbol);
-
-            if (i == arr.length - 1) {
-                result += currentValue;
+        for(int i = 0; i < s.length(); i++) {
+            int curr = map.get(s.charAt(i));
+            if(i < s.length() - 1 && curr < map.get(s.charAt(i + 1))) {
+                res -= curr;
             } else {
-                if (currentValue < map.get(arr[i + 1])) {
-                    result -= currentValue;
-                } else {
-                    result += currentValue;
-                }
+                res += curr;
             }
         }
 
-        return result;
+        return res;
     }
 }
