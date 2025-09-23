@@ -2,37 +2,20 @@ package problems;
 
 public class MergeSortedArray {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int[] res = new int[n + m];
+        int lastM = m - 1;
+        int lastN = n - 1;
+        int lastIndex = nums1.length - 1;
 
-        int left = 0;
-        int right = 0;
-
-        int index = 0;
-
-        while(left < m && right < n) {
-
-            if(nums1[left] < nums2[right]) {
-                res[index] = nums1[left];
-                left++;
+        while(lastM >= 0 && lastN >= 0) {
+            if(nums1[lastM] > nums2[lastN]) {
+                nums1[lastIndex--] = nums1[lastM--];
             } else {
-                res[index] = nums2[right];
-                right++;
+                nums1[lastIndex--] = nums2[lastN--];
             }
-            index++;
         }
 
-        while(left < m) {
-            res[index] = nums1[left];
-            left++;
-            index++;
+        while(lastN >= 0) {
+            nums1[lastIndex--] = nums2[lastN--];
         }
-
-        while(right < n) {
-            res[index] = nums2[right];
-            right++;
-            index++;
-        }
-
-        for(int i = 0; i < res.length; i++) nums1[i] = res[i];
     }
 }
