@@ -2,21 +2,20 @@ package problems;
 
 public class RotateFunction {
     public int maxRotateFunction(int[] nums) {
-        if (nums == null || nums.length == 0) return 0;
-        int sum = 0, F0 = 0, max = Integer.MIN_VALUE;
+        int sum = 0;
+        int f = 0;
+        int n = nums.length;
 
-        for (int i = 0; i < nums.length; i++) {
+        for(int i = 0;i < n; i++){
             sum += nums[i];
-            F0 += i * nums[i];
+            f += i * nums[i];
         }
 
-        int dp[] = new int[nums.length];
-        dp[0] = F0;
-        max = dp[0];
+        int max = f;
 
-        for (int i = 1; i < nums.length; i++) {
-            dp[i] = dp[i-1] + sum - nums.length * nums[nums.length - i];
-            max = Math.max (max, dp [i]);
+        for(int i = 1;i < n; i++){
+            f = f + sum - n * nums[n - i];
+            max = Math.max(max, f);
         }
 
         return max;
