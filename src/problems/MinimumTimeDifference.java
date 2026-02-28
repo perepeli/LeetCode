@@ -1,43 +1,30 @@
 package problems;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MinimumTimeDifference {
     public int findMinDifference(List<String> timePoints) {
-        List<int[]> list = new ArrayList<>();
-        for(String s : timePoints) {
-            String[] parts = s.split(":");
-            list.add(new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])});
+        int[] minutes = new int[timePoints.size()];
+        for (int i = 0; i < timePoints.size(); i++) {
+            String time = timePoints.get(i);
+            int h = Integer.parseInt(time.substring(0, 2));
+            int m = Integer.parseInt(time.substring(3));
+            minutes[i] = h * 60 + m;
         }
 
-        list.sort((a, b) -> {
-            if(a[0] != b[0]) return a[0] - b[0];
-            return a[1] - b[1];
-        });
 
-        int minDiff = Integer.MAX_VALUE;
+        Arrays.sort(minutes);
 
-        for(int i = 1; i < list.size(); i++) {
-            int[] left = list.get(i - 1);
-            int[] right = list.get(i);
-
-            int leftMin = left[0] * 60 + left[1];
-            int rightMin = right[0] * 60 + right[1];
-
-            minDiff = Math.min(minDiff, rightMin - leftMin);
+        int ans = Integer.MAX_VALUE;
+        for (int i = 0; i < minutes.length - 1; i++) {
+            ans = Math.min(ans, minutes[i + 1] - minutes[i]);
         }
 
-        int[] left = list.get(0);
-
-        int fromStartToLeft = 60 * left[0] + left[1];
-
-        int[] right = list.get(list.size() - 1);
-
-        int fromRightToEnd = ((60 * 23) - (60 * right[0])) + (59 - right[1]);
-
-        minDiff = Math.min(minDiff, fromRightToEnd + fromStartToLeft + 1);
-
-        return minDiff;
+        return Math.min(
+                ans,
+                24 * 60 - minutes[minutes.length - 1] + minutes[0]
+        );
     }
 }
