@@ -1,5 +1,7 @@
 package problems;
 
+import java.util.Arrays;
+
 public class MaximizeScoreAfterNOperations {
     public int backtrack(int[] nums, int mask, int pairsPicked, int[] memo) {
         if (2 * pairsPicked == nums.length) {
